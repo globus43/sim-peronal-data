@@ -1,0 +1,7 @@
+configVersion: 1
+project: sim-info
+deploy:
+  namespace: default
+---
+image: sim_info
+dockerfile: Dockerfile
