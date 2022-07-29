@@ -27,10 +27,10 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Get repository name
-        run: echo "REPO_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+        run: echo "DOCKER_TAG=${{ secrets.REGISTRY_URL }}/${GITHUB_REPOSITORY#*/}:${GITHUB_SHA:0:7}" >> $GITHUB_ENV
 
       - name: Get info
-        run: echo "$IMAGE"
+        run: echo "{{ env.DOCKER_TAG }}"
 
       - name: Build & push Docker image
         uses: docker/build-push-action@v3
@@ -39,4 +39,4 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: "${{ secrets.REGISTRY_URL }}/${{ env.REPO_NAME }}:${GITHUB_SHA:0:7}"
+          tags: "${{ env.DOCKER_TAG }}"
