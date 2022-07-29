@@ -39,3 +39,20 @@ jobs:
           tags: ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}, ${{ env.DOCKER_IMAGE }}:latest
           cache-from: 'type=registry,ref=${{ secrets.REGISTRY_URL }}/${{ env.DOCKER_IMAGE }}:buildcache'
           cache-to: 'type=registry,ref=${{ secrets.REGISTRY_URL }}/${{ env.DOCKER_IMAGE }},mode=max'
+      
+      - name: Update Docker repository
+        uses: fjogeleit/yaml-update-action@main
+        with:
+          valueFile: '.helm/values.yaml'
+          propertyPath: 'image.repository'
+          value: ${{ env.DOCKER_IMAGE }}
+          message: 'Update Repository to ${{ env.DOCKER_IMAGE }}'
+          
+      - name: Update Image Tag
+        uses: fjogeleit/yaml-update-action@main
+        with:
+          valueFile: '.helm/values.yaml'
+          propertyPath: 'image.tag'
+          value: ${{ env.DOCKER_TAG }}
+          message: 'Update Tag to ${{ env.DOCKER_TAG }}'
+    
