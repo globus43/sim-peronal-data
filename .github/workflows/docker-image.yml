@@ -46,6 +46,7 @@ jobs:
           valueFile: '.helm/values.yaml'
           propertyPath: 'image.repository'
           value: ${{ env.DOCKER_IMAGE }}
+          updateFile: true
           message: 'Update Repository to ${{ env.DOCKER_IMAGE }}'
           
       - name: Update Image Tag
@@ -54,5 +55,6 @@ jobs:
           valueFile: '.helm/values.yaml'
           propertyPath: 'image.tag'
           value: ${{ env.DOCKER_TAG }}
+          updateFile: true
           message: 'Update Tag to ${{ env.DOCKER_TAG }}'
     
