@@ -24,11 +24,11 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
       
       - name: Get info
-        run: echo "registry.alexshangin.ru/${GITHUB_REPOSITORY#*/}:${GITHUB_SHA:0:7}"
+        run: echo "${{ secrets.REGISTRY_URL }}/${GITHUB_REPOSITORY#*/}:${GITHUB_SHA:0:7}"
         
       - name: Build & push Docker image
         uses: docker/build-push-action@v3
         with:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: "registry.alexshangin.ru/${GITHUB_REPOSITORY#*/}:${GITHUB_SHA:0:7}"
+          tags: "${{ secrets.REGISTRY_URL }}/${GITHUB_REPOSITORY#*/}:${GITHUB_SHA:0:7}"
