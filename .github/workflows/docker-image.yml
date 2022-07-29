@@ -5,6 +5,9 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+    
+env:
+  IMAGE: ${{ secrets.REGISTRY_URL }}/${GITHUB_REPOSITORY#*/}:${GITHUB_SHA:0:7}
 
 jobs:
   build:
@@ -22,18 +25,9 @@ jobs:
           registry: ${{ secrets.REGISTRY_URL }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-      
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: ${{ secrets.REGISTRY_URL }}/${GITHUB_REPOSITORY#*/}
-      
+            
       - name: Get info
-        run: echo "${{ steps.meta.outputs.tags }}:${GITHUB_SHA:0:7}"
-        
-      - name: Metadata info
-        run: echo "${{ steps.meta.outputs.tags }}"
+        run: echo "${IMAGE}"
         
       - name: Build & push Docker image
         uses: docker/build-push-action@v3
@@ -42,4 +36,4 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: "${{ steps.meta.outputs.tags }}:${GITHUB_SHA:0:7}"
+          tags: "${IMAGE}"
