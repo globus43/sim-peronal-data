@@ -36,4 +36,4 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: "registry.alexshangin.ru/sim-personal-data:test-action"
+          tags: "${{ secrets.REGISTRY_URL }}/sim-personal-data:test-action"
