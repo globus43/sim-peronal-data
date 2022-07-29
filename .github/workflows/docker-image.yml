@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
     
 env:
-  IMAGE: ${{ secrets.REGISTRY_URL }}/${GITHUB_REPOSITORY#*/}:${GITHUB_SHA:0:7}
+  IMAGE: "${{ secrets.REGISTRY_URL }}/${GITHUB_REPOSITORY#*/}:${GITHUB_SHA:0:7}"
 
 jobs:
   build:
@@ -15,20 +15,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-        
+
       - name: Login to private registry
         uses: docker/login-action@v2
         with:
           registry: ${{ secrets.REGISTRY_URL }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-            
+
       - name: Get info
-        run: echo "${IMAGE}"
-        
+        run: echo "$IMAGE"
+
       - name: Build & push Docker image
         uses: docker/build-push-action@v3
         with:
@@ -36,4 +36,4 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: "${IMAGE}"
+          tags: "regisry.alexshangin.ru/sim-personal-data:test-action"
