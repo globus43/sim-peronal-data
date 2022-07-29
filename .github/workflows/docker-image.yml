@@ -39,4 +39,4 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: "${{ secrets.REGISTRY_URL }}/${{ env.REPO_NAME }}:test-action2"
+          tags: "${{ secrets.REGISTRY_URL }}/${{ env.REPO_NAME }}:${GITHUB_SHA:0:7}"
