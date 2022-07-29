@@ -10,22 +10,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Get tag
-        run: echo "${GITHUB_REPOSITORY#*/}:${GITHUB_SHA:0:7}"
-
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#        
-#      - name: Login to Registry
-#        uses: docker/login-action@v2
-#        with:
-#          registry: ${{ secrets.REGISTRY_URL }}
-#          username: ${{ secrets.REGISTRY_USERNAME }}
-#          password: ${{ secrets.REGISTRY_PASSWORD }}
-#          
-#      - name: Build and push
-#        uses: docker/build-push-action@v3
-#        with:
-#          context: .
-#          push: true
-#          tags: ${GITHUB_REPOSITORY#*/}:${GITHUB_SHA:0:7}
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Build & push Docker image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          registry: ${{ secrets.REGISTRY_URL }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+          image: ${GITHUB_REPOSITORY#*/}
+          tags: ${GITHUB_SHA:0:7}, latest
