@@ -36,4 +36,4 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: "${{ secrets.REGISTRY_URL }}/sim-personal-data:test-action"
+          tags: "${{ secrets.REGISTRY_URL }}/${GITHUB_REPOSITORY#*/}:test-action2"
