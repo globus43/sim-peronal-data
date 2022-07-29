@@ -26,6 +26,9 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
+      - name: Get repository name
+        run: echo "REPO_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+
       - name: Get info
         run: echo "$IMAGE"
 
@@ -36,4 +39,4 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: "${{ secrets.REGISTRY_URL }}/${GITHUB_REPOSITORY#*/}:test-action2"
+          tags: "${{ secrets.REGISTRY_URL }}/${{ env.REPO_NAME }}:test-action2"
