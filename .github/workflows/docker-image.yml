@@ -29,9 +29,6 @@ jobs:
       - name: Set Tag
         run: echo "DOCKER_TAG=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
 
-      - name: Get info
-        run: echo "{{ env.DOCKER_TAG }}"
-
       - name: Build & push Docker image
         uses: docker/build-push-action@v3
         with:
@@ -40,3 +37,5 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}, ${{ env.DOCKER_IMAGE }}:latest
+          cache-from: 'type=registry,ref=${{ secrets.REGISTRY_URL }}/${{ env.DOCKER_IMAGE }}:buildcache'
+          cache-to: 'type=registry,ref=${{ secrets.REGISTRY_URL }}/${{ env.DOCKER_IMAGE }},mode=max'
