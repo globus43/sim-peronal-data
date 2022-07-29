@@ -5,9 +5,6 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-    
-env:
-  IMAGE: "${{ secrets.REGISTRY_URL }}/${GITHUB_REPOSITORY#*/}:${GITHUB_SHA:0:7}"
 
 jobs:
   build:
@@ -26,8 +23,11 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Get repository name
-        run: echo "DOCKER_TAG=${{ secrets.REGISTRY_URL }}/${GITHUB_REPOSITORY#*/}:${GITHUB_SHA:0:7}" >> $GITHUB_ENV
+      - name: Set Image
+        run: echo "DOCKER_IMAGE=${{ secrets.REGISTRY_URL }}/${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+        
+      - name: Set Tag
+        run: echo "DOCKER_TAG=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
 
       - name: Get info
         run: echo "{{ env.DOCKER_TAG }}"
@@ -39,4 +39,4 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: "${{ env.DOCKER_TAG }}"
+          tags: ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}, ${{ env.DOCKER_IMAGE }}:latest
