@@ -22,7 +22,7 @@ jobs:
       - name: Login to private registry
         uses: docker/login-action@v2
         with:
-          registry: regisry.alexshangin.ru
+          registry: ${{ secrets.REGISTRY_URL }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
@@ -36,4 +36,4 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: "regisry.alexshangin.ru/sim-personal-data:test-action"
+          tags: "registry.alexshangin.ru/sim-personal-data:test-action"
