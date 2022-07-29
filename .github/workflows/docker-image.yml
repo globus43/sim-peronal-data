@@ -22,7 +22,7 @@ jobs:
       - name: Login to private registry
         uses: docker/login-action@v2
         with:
-          registry: ${{ secrets.REGISTRY_URL }}
+          registry: regisry.alexshangin.ru
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
