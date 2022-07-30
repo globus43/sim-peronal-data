@@ -4,7 +4,7 @@ image:
   pullPolicy: IfNotPresent
   tag: 9bb7fb0
 imagePullSecrets:
-  - name: alexshangin
+  - name: image-pull-secret
 nameOverride: ''
 fullnameOverride: ''
 serviceAccount:
@@ -27,6 +27,7 @@ ingress:
     ingress.kubernetes.io/ssl-redirect: 'false'
     nginx.ingress.kubernetes.io/force-ssl-redirect: 'false'
     nginx.ingress.kubernetes.io/from-to-www-redirect: 'false'
+    cert-manager.io/cluster-issuer: office-ru-ca-issuer
   hosts:
     - host: sim.office.ru
       paths:
