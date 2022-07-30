@@ -2,9 +2,9 @@ replicaCount: 1
 image:
   repository: registry.alexshangin.ru/sim-personal-data
   pullPolicy: IfNotPresent
-  tag: 80ba82c
+  tag: b7493ed
 imagePullSecrets:
-  - name: alexshangin
+  - name: image-pull-secret
 nameOverride: ''
 fullnameOverride: ''
 serviceAccount:
@@ -36,10 +36,6 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-  tls:
-    - secretName: sim-office-ru
-      hosts:
-        - sim.office.ru
 resources:
   limits:
     cpu: 100m
@@ -50,7 +46,7 @@ resources:
 autoscaling:
   enabled: false
   minReplicas: 1
-  maxReplicas: 100
+  maxReplicas: 3
   targetCPUUtilizationPercentage: 80
 nodeSelector: {}
 tolerations: []
