@@ -27,7 +27,7 @@ ingress:
     ingress.kubernetes.io/ssl-redirect: 'false'
     nginx.ingress.kubernetes.io/force-ssl-redirect: 'false'
     nginx.ingress.kubernetes.io/from-to-www-redirect: 'false'
-    cert-manager.io/cluster-issuer: office-ru-ca-issuer
+#    cert-manager.io/cluster-issuer: office-ru-ca-issuer
   hosts:
     - host: sim.office.ru
       paths:
@@ -37,10 +37,10 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-  tls:
-    - secretName: sim-office-ru
-      hosts:
-        - sim.office.ru
+#  tls:
+#    - secretName: sim-office-ru
+#      hosts:
+#        - sim.office.ru
 resources:
   limits:
     cpu: 100m
@@ -51,7 +51,7 @@ resources:
 autoscaling:
   enabled: false
   minReplicas: 1
-  maxReplicas: 100
+  maxReplicas: 3
   targetCPUUtilizationPercentage: 80
 nodeSelector: {}
 tolerations: []
