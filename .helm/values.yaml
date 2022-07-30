@@ -27,6 +27,7 @@ ingress:
     ingress.kubernetes.io/ssl-redirect: 'false'
     nginx.ingress.kubernetes.io/force-ssl-redirect: 'false'
     nginx.ingress.kubernetes.io/from-to-www-redirect: 'false'
+    cert-manager.io/issuer: office-ru-ca-issuer
   hosts:
     - host: sim.office.ru
       paths:
@@ -36,6 +37,10 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+  tls:
+    - secretName: sim-office-ru
+      hosts:
+        - sim.office.ru
 resources:
   limits:
     cpu: 100m
