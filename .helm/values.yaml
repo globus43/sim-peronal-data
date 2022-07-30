@@ -2,7 +2,7 @@ replicaCount: 1
 image:
   repository: registry.alexshangin.ru/sim-personal-data
   pullPolicy: IfNotPresent
-  tag: 80ba82c
+  tag: 876f464
 imagePullSecrets:
   - name: alexshangin
 nameOverride: ''
